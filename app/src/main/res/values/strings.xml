@@ -16,4 +16,6 @@
     <string name="search">Hint</string>
     <string name="recommendation">Recommendation</string>
     <string name="estimate_cost">Estimate Your Cost</string>
+    <string name="user_name">Nama User</string>
+    <string name="user_location">User Location</string>
 </resources>
