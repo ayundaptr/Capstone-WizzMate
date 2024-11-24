@@ -16,7 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://onprogress\"")
+        buildConfigField("String", "BASE_URL", "\"https://wizzmate-app.vercel.app/api/\"")
 
     }
 

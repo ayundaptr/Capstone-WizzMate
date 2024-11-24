@@ -8,12 +8,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("register")
+    @POST("auth/register")
     fun register(
         @Body request: RegisterRequest
     ): Call<AuthResponse>
 
-    @POST("login")
+    @POST("auth/login")
     fun login(
         @Body request: LoginRequest
     ): Call<AuthResponse>
