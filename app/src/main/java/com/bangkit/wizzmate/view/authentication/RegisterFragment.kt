@@ -41,6 +41,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.buttonRegister.setOnClickListener {
+            val username = binding.edRegisterName.text.toString()
             val email = binding.edRegisterEmail.text.toString()
             val password = binding.edRegisterPassword.text.toString()
 
@@ -54,7 +55,7 @@ class RegisterFragment : Fragment() {
                 ).show()
                 binding.loadingBar.visibility = View.GONE
             } else {
-                viewModel.register(email, password)
+                viewModel.register(username, email, password)
                 binding.buttonRegister.isEnabled = false
             }
         }

@@ -15,8 +15,8 @@ class RegisterViewModel : ViewModel() {
     private val _isRegister = MutableLiveData<Boolean>()
     val isRegister: LiveData<Boolean> = _isRegister
 
-    fun register(email: String, password: String){
-        val request = RegisterRequest(email, password)
+    fun register(username: String, email: String, password: String){
+        val request = RegisterRequest(username, email, password)
         val client = ApiConfig.getApiService().register(request)
         client.enqueue(object : Callback<AuthResponse> {
             override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
