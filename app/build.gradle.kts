@@ -16,7 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://tempat-wisata-wizzmate.vercel.app/\"")
+        buildConfigField("String", "BASE_URL", "\"https://zj7336hw-5000.asse.devtunnels.ms/\"")
 
     }
 

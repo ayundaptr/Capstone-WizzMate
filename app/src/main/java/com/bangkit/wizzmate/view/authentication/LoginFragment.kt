@@ -39,23 +39,22 @@ class LoginFragment : Fragment() {
         }
 
         binding.buttonLogin.setOnClickListener {
-//            val email = binding.edLoginEmail.text.toString()
-//            val password = binding.edLoginPassword.text.toString()
-//
-//            binding.loadingBar.visibility = View.VISIBLE
-//
-//            if (email.isEmpty() || password.isEmpty()) {
-//                Toast.makeText(
-//                    requireContext(),
-//                    "Email dan password harus diisi",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                binding.loadingBar.visibility = View.GONE
-//            } else {
-//                viewModel.login(email, password)
-//                binding.buttonLogin.isEnabled = false
-//            }
-            startActivity(Intent(context, DetailActivity::class.java))
+            val email = binding.edLoginEmail.text.toString()
+            val password = binding.edLoginPassword.text.toString()
+
+            binding.loadingBar.visibility = View.VISIBLE
+
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Email dan password harus diisi",
+                    Toast.LENGTH_SHORT
+                ).show()
+                binding.loadingBar.visibility = View.GONE
+            } else {
+                viewModel.login(email, password)
+                binding.buttonLogin.isEnabled = false
+            }
         }
 
         viewModel.isLogin.observe(viewLifecycleOwner) { loginStatus ->
@@ -64,6 +63,8 @@ class LoginFragment : Fragment() {
                 startActivity(Intent(context, MainActivity::class.java))
             } else {
                 Toast.makeText(requireContext(), "Login gagal", Toast.LENGTH_SHORT).show()
+                binding.loadingBar.visibility = View.GONE
+                binding.buttonLogin.isEnabled = true
             }
         }
     }
