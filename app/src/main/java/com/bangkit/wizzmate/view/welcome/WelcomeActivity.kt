@@ -1,30 +1,35 @@
 package com.bangkit.wizzmate.view.welcome
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
-import android.view.View
-import android.widget.TextView
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bangkit.wizzmate.R
 import com.bangkit.wizzmate.databinding.ActivityWelcomeBinding
+import com.bangkit.wizzmate.helper.StringHelper.makeTextLink
 import com.bangkit.wizzmate.view.authentication.AuthenticationActivity
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Log.d("Permission", "Location permission granted")
+        } else {
+            Log.d("Permission", "Location permission denied")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        requestLocationPermission()
         binding.buttonLogin.setOnClickListener {
             startActivity(Intent(this, AuthenticationActivity::class.java))
         }
@@ -49,32 +54,27 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun makeTextLink(textView: TextView, str: String, underlined: Boolean, color: Int?, action: (() -> Unit)? = null) {
-        val spannableString = SpannableString(textView.text)
-        val textColor = color?.let {
-            resources.getColor(it, textView.context.theme)
-        } ?: textView.currentTextColor
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                action?.invoke()
+    private fun requestLocationPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                // Permission is already granted
+                Log.d("Permission", "Location permission already granted")
             }
-            override fun updateDrawState(drawState: TextPaint) {
-                super.updateDrawState(drawState)
-                drawState.isUnderlineText = underlined
-                drawState.color = textColor
+
+            shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) -> {
+                // Show an explanation to the user
+                Log.d("Permission", "Explain why the app needs location access")
+                // Here, you can show a dialog explaining why the permission is needed
+                requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+
+            else -> {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
             }
         }
-        val index = spannableString.indexOf(str)
-        spannableString.setSpan(
-            StyleSpan(Typeface.BOLD),
-            index,
-            index + str.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-
-        spannableString.setSpan(clickableSpan, index, index + str.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textView.text = spannableString
-        textView.movementMethod = LinkMovementMethod.getInstance()
-        textView.highlightColor = Color.TRANSPARENT
     }
 }

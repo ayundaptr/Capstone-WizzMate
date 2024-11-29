@@ -8,5 +8,17 @@ data class AuthResponse(
 	val message: String,
 
 	@field:SerializedName("user")
-	val user: String
+	val user: User
+)
+
+data class User(
+
+	@field:SerializedName("id")
+	val id: String,
+
+	@field:SerializedName("email")
+	val email: String,
+
+	@field:SerializedName("username")
+	val username: String
 )

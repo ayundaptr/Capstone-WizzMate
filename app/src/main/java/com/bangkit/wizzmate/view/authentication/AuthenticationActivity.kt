@@ -23,19 +23,8 @@ class AuthenticationActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             if(isRegister){
                 switchFragment(RegisterFragment())
-                binding.toggleAuthetication.check(R.id.buttonRegister)
             } else {
                 switchFragment(LoginFragment())
-                binding.toggleAuthetication.check(R.id.buttonLogin)
-            }
-        }
-
-        binding.toggleAuthetication.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                when (checkedId) {
-                    R.id.buttonLogin -> switchFragment(LoginFragment())
-                    R.id.buttonRegister -> switchFragment(RegisterFragment())
-                }
             }
         }
     }
@@ -44,10 +33,5 @@ class AuthenticationActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, fragment)
             .commit()
-        if (fragment is LoginFragment) {
-            binding.toggleAuthetication.check(R.id.buttonLogin)
-        } else {
-            binding.toggleAuthetication.check(R.id.buttonRegister)
-        }
     }
 }

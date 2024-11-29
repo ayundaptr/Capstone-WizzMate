@@ -16,4 +16,15 @@
     <string name="search">Hint</string>
     <string name="recommendation">Recommendation</string>
     <string name="estimate_cost">Estimate Your Cost</string>
+    <string name="user_name">Nama User</string>
+    <string name="user_location">User Location</string>
+    <string name="destination_name">nama wisata</string>
+    <string name="destination_location">lokasi</string>
+    <string name="remember_me">Remenber me</string>
+    <string name="sign_in_your_account">Sign in to Your Account</string>
+    <string name="dont_have_account">Don’t have an account? Sign Up</string>
+    <string name="already_have_account">Already have an account? Sign In</string>
+    <string name="sign_up_your_account">Sign up Your Account</string>
+    <string name="destination_rating">5.0</string>
+    <string name="destination_description">Description</string>
 </resources>
