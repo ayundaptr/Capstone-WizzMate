@@ -39,7 +39,15 @@ class WisataAdapter : PagingDataAdapter<DataItem, WisataAdapter.MyViewHolder>(DI
         holder.bind(wisata!!)
         holder.itemView.setOnClickListener {
             val context = holder.itemView.context
-            context.startActivity(Intent(context, DetailActivity::class.java))
+            val intent = Intent(context, DetailActivity::class.java).apply {
+                putExtra("LATITUDE", wisata.lat.toString().toDouble())
+                putExtra("LONGITUDE", wisata.long.toString().toDouble())
+                putExtra("IMAGE_URL", wisata.imageUrl)
+                putExtra("PLACE_NAME", wisata.placeName)
+                putExtra("CITY", wisata.city)
+                putExtra("RATING", wisata.rating.toString().toDouble())
+            }
+            context.startActivity(intent)
         }
     }
 

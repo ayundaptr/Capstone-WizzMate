@@ -64,6 +64,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
 
 
 }
