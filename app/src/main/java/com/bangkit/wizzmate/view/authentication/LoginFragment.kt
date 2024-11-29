@@ -60,7 +60,13 @@ class LoginFragment : Fragment() {
         viewModel.isLogin.observe(viewLifecycleOwner) { loginStatus ->
             if (loginStatus) {
                 Toast.makeText(requireContext(), "Login berhasil", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(context, MainActivity::class.java))
+                viewModel.responseBody.observe(viewLifecycleOwner) {
+                    val username = viewModel.responseBody.value?.user?.username
+                    val intent = Intent(context, MainActivity::class.java).apply {
+                        putExtra("USERNAME", username)
+                    }
+                    startActivity(intent)
+                }
             } else {
                 Toast.makeText(requireContext(), "Login gagal", Toast.LENGTH_SHORT).show()
                 binding.loadingBar.visibility = View.GONE

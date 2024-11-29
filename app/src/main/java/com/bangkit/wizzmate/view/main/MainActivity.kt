@@ -2,6 +2,7 @@ package com.bangkit.wizzmate.view.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val username = intent.getStringExtra("USERNAME")
+        Log.d("MainActivity", "Received username: $username")
         val apiService = ApiConfig.getApiService()
         val repository = WisataRepository(apiService)
         val mainViewModel = ViewModelProvider(
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             startActivity(Intent(this, DetailActivity::class.java))
         }
+        binding.tvProfileName.text = username
         val storyAdapter = WisataAdapter()
         val dividerItemDecoration = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         binding.rvWisata.apply{

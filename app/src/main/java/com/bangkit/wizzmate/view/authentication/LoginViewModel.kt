@@ -16,6 +16,8 @@ import retrofit2.Response
 class LoginViewModel : ViewModel() {
     private val _isLogin = MutableLiveData<Boolean>()
     val isLogin: LiveData<Boolean> = _isLogin
+    private val _responseBody = MutableLiveData<AuthResponse>()
+    val responseBody : LiveData<AuthResponse> = _responseBody
 
     fun login(email: String, password: String){
         val request = LoginRequest(email, password)
@@ -25,6 +27,7 @@ class LoginViewModel : ViewModel() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     _isLogin.value = true
+                    _responseBody.value= response.body()
                 } else {
                     _isLogin.value = false
                     Log.e("Login gagal", "Login failed, response body is null")
