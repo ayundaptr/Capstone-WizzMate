@@ -11,6 +11,11 @@
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="4dp"
     card_view:cardCornerRadius="20dp">
+    <ImageView
+        android:id="@+id/iv_destination"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_bottom"

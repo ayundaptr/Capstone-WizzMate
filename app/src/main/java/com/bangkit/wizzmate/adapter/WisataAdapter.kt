@@ -21,14 +21,7 @@ class WisataAdapter : PagingDataAdapter<DataItem, WisataAdapter.MyViewHolder>(DI
             Glide.with(itemView.context)
                 .load(wisata.imageUrl)
                 .transform(RoundedCorners(16))
-                .into(object : com.bumptech.glide.request.target.ViewTarget<CardView, android.graphics.drawable.Drawable>(binding.cardView) {
-                    override fun onResourceReady(
-                        resource: android.graphics.drawable.Drawable,
-                        transition: com.bumptech.glide.request.transition.Transition<in android.graphics.drawable.Drawable>?
-                    ) {
-                        view.background = resource
-                    }
-                })
+                .into(binding.ivDestination)
             binding.tvDestinationLocation.text = wisata.city
             binding.tvDestinationRating.text = wisata.rating.toString()
         }
