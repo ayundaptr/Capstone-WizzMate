@@ -39,6 +39,8 @@ class WisataAdapter : PagingDataAdapter<DataItem, WisataAdapter.MyViewHolder>(DI
                 putExtra("PLACE_NAME", wisata.placeName)
                 putExtra("CITY", wisata.city)
                 putExtra("RATING", wisata.rating.toString().toDouble())
+                putExtra("CATEGORY", wisata.category)
+                putExtra("DESCRIPTION", wisata.description)
             }
             context.startActivity(intent)
         }

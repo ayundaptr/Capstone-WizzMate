@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bangkit.wizzmate.R
 import com.bangkit.wizzmate.databinding.ActivityDetailBinding
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -48,9 +49,25 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         // Get destination coordinates from intent
         val latitude = intent.getDoubleExtra("LATITUDE", 0.0)
         val longitude = intent.getDoubleExtra("LONGITUDE", 0.0)
+        val destinationName = intent.getStringExtra("PLACE_NAME")
+        val city = intent.getStringExtra("CITY")
+        val rating = intent.getDoubleExtra("RATING", 0.0)
+        val imageUrl = intent.getStringExtra("IMAGE_URL")
+        val category = intent.getStringExtra("CATEGORY")
+        val description = intent.getStringExtra("DESCRIPTION")
+
+        Glide.with(this)
+            .load(imageUrl)
+            .into(binding.ivWisata)
+        binding.apply {
+            tvNamaWisata.text = destinationName
+            tvDestinationLocation.text = city
+            tvRating.text = rating.toString()
+            tvCategory.text = category
+            tvDescription.text = description
+        }
+
         destinationLocation = LatLng(latitude, longitude)
-        binding.tvDestinationLocation.text = destinationLocation.toString()
-        Log.e("DetailActivity", "Destination: $destinationLocation")
 
         // Initialize FusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -99,11 +116,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun addMarkersToMap() {
         if (userLocation == null || destinationLocation == null) return
 
-        val userMarker = googleMap.addMarker(
-            MarkerOptions().position(userLocation!!).title("Your Location")
+        googleMap.addMarker(
+            MarkerOptions().position(userLocation!!).snippet("Your Location")
         )
-        val destinationMarker = googleMap.addMarker(
-            MarkerOptions().position(destinationLocation!!).title("Destination")
+        googleMap.addMarker(
+            MarkerOptions().position(destinationLocation!!).snippet(intent.getStringExtra("PLACE_NAME"))
         )
 
         val bounds = LatLngBounds.builder()
