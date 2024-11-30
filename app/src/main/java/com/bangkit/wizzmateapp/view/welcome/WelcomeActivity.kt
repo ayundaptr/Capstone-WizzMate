@@ -12,12 +12,17 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bangkit.wizzmateapp.BuildConfig
 import com.bangkit.wizzmateapp.R
+import com.bangkit.wizzmateapp.data.local.SessionPreferences
+import com.bangkit.wizzmateapp.data.local.dataStore
 import com.bangkit.wizzmateapp.databinding.ActivityWelcomeBinding
 import com.bangkit.wizzmateapp.helper.StringHelper.makeTextLink
 import com.bangkit.wizzmateapp.view.authentication.AuthenticationActivity
+import com.bangkit.wizzmateapp.view.authentication.LoginViewModel
+import com.bangkit.wizzmateapp.view.authentication.LoginViewModelFactory
 import com.bangkit.wizzmateapp.view.main.MainActivity
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -49,6 +54,9 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         requestLocationPermission()
+
+        val pref = SessionPreferences.getInstance(this.dataStore)
+        val loginViewModel = ViewModelProvider(this, LoginViewModelFactory(pref))[LoginViewModel::class.java]
         binding.buttonLogin.setOnClickListener {
             startActivity(Intent(this, AuthenticationActivity::class.java))
         }
@@ -77,6 +85,15 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.buttonLoginGoogle.setOnClickListener {
             signIn()
+        }
+
+        loginViewModel.isAlreadyLogin()
+        loginViewModel.isLogin.observe(this){
+            if (it){
+                val intent = Intent(this, MainActivity::class.java).
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
         }
     }
 
@@ -167,6 +184,17 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
+            val email = currentUser.email
+            if (email != null) {
+                // Ambil nama sebelum '@'
+                val username = email.substringBefore("@")
+
+                lifecycleScope.launch {
+                    val pref = SessionPreferences.getInstance(dataStore)
+                    pref.saveusername(username)
+                }
+            }
+
             startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
             finish()
         }

@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.datastore.core.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,6 +73,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation("com.google.android.gms:play-services-auth:21.1.1")
+    implementation(libs.androidx.datastore.preferences)
 
 
 

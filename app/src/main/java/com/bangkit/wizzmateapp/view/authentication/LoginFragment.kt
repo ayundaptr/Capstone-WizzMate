@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.wizzmateapp.R
+import com.bangkit.wizzmateapp.data.local.SessionPreferences
+import com.bangkit.wizzmateapp.data.local.dataStore
 import com.bangkit.wizzmateapp.databinding.FragmentLoginBinding
 import com.bangkit.wizzmateapp.helper.StringHelper.makeTextLink
 import com.bangkit.wizzmateapp.view.main.MainActivity
@@ -26,8 +28,9 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val pref = SessionPreferences.getInstance(requireContext().dataStore)
         val viewModel =
-            ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
+            ViewModelProvider(this, LoginViewModelFactory(pref))[LoginViewModel::class.java]
 
         makeTextLink(binding.tvDontHaveAccount, "Sign Up", false, R.color.primaryColor) {
             val intent = Intent(context, AuthenticationActivity::class.java).apply {
@@ -50,7 +53,11 @@ class LoginFragment : Fragment() {
                 ).show()
                 binding.loadingBar.visibility = View.GONE
             } else {
-                viewModel.login(email, password)
+                if (binding.cbRemember.isChecked){
+                    viewModel.login(email, password)
+                } else {
+                    viewModel.oneTimeLogin(email, password)
+                }
                 binding.apply {
                     buttonLogin.isEnabled = false
                     edLoginEmail.isEnabled = false
@@ -63,11 +70,8 @@ class LoginFragment : Fragment() {
             if (loginStatus) {
                 Toast.makeText(requireContext(), "Login berhasil", Toast.LENGTH_SHORT).show()
                 viewModel.responseBody.observe(viewLifecycleOwner) {
-                    val username = viewModel.responseBody.value?.user?.username
-                    val intent = Intent(context, MainActivity::class.java).apply {
-                        putExtra("USERNAME", username)
+                    val intent = Intent(context, MainActivity::class.java).
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    }
                     startActivity(intent)
                 }
             } else {
