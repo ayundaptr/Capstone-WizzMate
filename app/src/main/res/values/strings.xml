@@ -27,4 +27,6 @@
     <string name="sign_up_your_account">Sign up Your Account</string>
     <string name="destination_rating">5.0</string>
     <string name="destination_description">Description</string>
+    <string name="destination_category">category</string>
+    <string name="destination_category_label">Category :</string>
 </resources>
