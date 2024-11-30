@@ -1,10 +1,14 @@
 package com.bangkit.wizzmateapp.view.authentication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bangkit.wizzmateapp.R
 import com.bangkit.wizzmateapp.databinding.ActivityAuthenticationBinding
+import com.bangkit.wizzmateapp.view.main.MainActivity
+import com.bangkit.wizzmateapp.view.welcome.WelcomeActivity
 
 class AuthenticationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthenticationBinding
@@ -18,12 +22,21 @@ class AuthenticationActivity : AppCompatActivity() {
         val isRegister = intent.getBooleanExtra("isRegister", false)
 
         if (savedInstanceState == null) {
-            if(isRegister){
+            if (isRegister) {
                 switchFragment(RegisterFragment())
             } else {
                 switchFragment(LoginFragment())
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(
+            this,
+            WelcomeActivity::class.java
+        ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 
     fun switchFragment(fragment: Fragment) {

@@ -56,7 +56,7 @@ class WelcomeActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = Firebase.auth
 
-        makeTextLink(binding.confirmAccount, "Sign Up", true, R.color.white) {
+        makeTextLink(binding.tvConfirmAccount, "Sign Up", true, R.color.primaryColor) {
             val intent = Intent(this, AuthenticationActivity::class.java).apply {
                 putExtra("isRegister", true)
             }

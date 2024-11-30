@@ -51,7 +51,11 @@ class LoginFragment : Fragment() {
                 binding.loadingBar.visibility = View.GONE
             } else {
                 viewModel.login(email, password)
-                binding.buttonLogin.isEnabled = false
+                binding.apply {
+                    buttonLogin.isEnabled = false
+                    edLoginEmail.isEnabled = false
+                    edLoginPassword.isEnabled = false
+                }
             }
         }
 
@@ -62,6 +66,7 @@ class LoginFragment : Fragment() {
                     val username = viewModel.responseBody.value?.user?.username
                     val intent = Intent(context, MainActivity::class.java).apply {
                         putExtra("USERNAME", username)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     }
                     startActivity(intent)
                 }

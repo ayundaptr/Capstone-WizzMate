@@ -52,8 +52,20 @@ class RegisterFragment : Fragment() {
                 ).show()
                 binding.loadingBar.visibility = View.GONE
             } else {
-                viewModel.register(username, email, password)
-                binding.buttonRegister.isEnabled = false
+                if (binding.edRegisterPassword.text.toString() != binding.edRegisterKonfirmasiPassword.text.toString()){
+                    binding.edRegisterKonfirmasiPasswordLayout.error = "Password tidak sama"
+                    binding.loadingBar.visibility = View.GONE
+                } else {
+                    viewModel.register(username, email, password)
+                    binding.apply {
+                        buttonRegister.isEnabled = false
+                        edRegisterName.isEnabled = false
+                        edRegisterEmail.isEnabled = false
+                        edRegisterPassword.isEnabled = false
+                        edRegisterKonfirmasiPassword.isEnabled = false
+                    }
+
+                }
             }
         }
 
