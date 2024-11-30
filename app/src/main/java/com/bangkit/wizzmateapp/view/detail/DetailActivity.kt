@@ -2,6 +2,8 @@ package com.bangkit.wizzmateapp.view.detail
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
@@ -81,11 +84,17 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         enableMyLocation()
 
-        googleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+        googleMap.apply {
+            mapType = GoogleMap.MAP_TYPE_HYBRID
+
+            isMyLocationEnabled = true
+            uiSettings.isMyLocationButtonEnabled = true
+        }
     }
 
     private fun enableMyLocation() {
@@ -114,10 +123,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun addMarkersToMap() {
         if (userLocation == null || destinationLocation == null) return
-
-        googleMap.addMarker(
-            MarkerOptions().position(userLocation!!).snippet("Your Location")
-        )
         googleMap.addMarker(
             MarkerOptions().position(destinationLocation!!).snippet(intent.getStringExtra("PLACE_NAME"))
         )
@@ -135,6 +140,15 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             googleMap.animateCamera(cameraUpdate)
             true // Return true to indicate that the event was handled
         }
+    }
+
+    fun getBitmapFromVectorDrawable(resourceId: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(this, resourceId) ?: return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
     }
 }
 
