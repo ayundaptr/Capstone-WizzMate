@@ -2,14 +2,15 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace = "com.bangkit.wizzmate"
+    namespace = "com.bangkit.wizzmateapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.bangkit.wizzmate"
+        applicationId = "com.bangkit.wizzmateapp"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -17,6 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", "\"https://zj7336hw-5000.asse.devtunnels.ms/\"")
+        buildConfigField("String", "AUTH_WEB_CLIENT_ID", "\"145207385445-6iua2nbn88p4l4pjuf88s5ke9hfep36n.apps.googleusercontent.com\"")
 
     }
 
@@ -54,6 +56,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.play.services.maps)
+    implementation(libs.googleid)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -65,6 +70,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("androidx.paging:paging-runtime-ktx:3.1.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation("com.google.android.gms:play-services-auth:21.1.1")
 
 
 
