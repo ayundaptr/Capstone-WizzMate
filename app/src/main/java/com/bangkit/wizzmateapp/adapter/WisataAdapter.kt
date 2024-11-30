@@ -6,23 +6,30 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.wizzmateapp.R
 import com.bangkit.wizzmateapp.data.remote.response.DataItem
 import com.bangkit.wizzmateapp.view.detail.DetailActivity
 import com.bangkit.wizzmateapp.databinding.DestinationItemBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-class WisataAdapter : PagingDataAdapter<DataItem, WisataAdapter.MyViewHolder>(DIFF_CALLBACK){
+class WisataAdapter : PagingDataAdapter<DataItem, WisataAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    class MyViewHolder (val binding: DestinationItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(val binding: DestinationItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(wisata: DataItem) {
             binding.tvDestinationName.text = wisata.placeName
             Glide.with(itemView.context)
                 .load(wisata.imageUrl)
                 .transform(RoundedCorners(16))
+                .error(R.drawable.error_image)
+                .centerCrop()
                 .into(binding.ivDestination)
-            binding.tvDestinationLocation.text = wisata.city
-            binding.tvDestinationRating.text = wisata.rating.toString()
+            binding.apply {
+                tvDestinationLocation.text = wisata.city
+                tvDestinationRating.text = wisata.rating.toString()
+                tvCategory.text = wisata.category
+            }
         }
     }
 
@@ -46,9 +53,11 @@ class WisataAdapter : PagingDataAdapter<DataItem, WisataAdapter.MyViewHolder>(DI
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WisataAdapter.MyViewHolder {
-        val binding = DestinationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            DestinationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
+
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
             override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {

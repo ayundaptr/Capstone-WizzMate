@@ -44,14 +44,14 @@ class HomeFragment : Fragment() {
 
         val storyAdapter = WisataAdapter()
         val dividerItemDecoration = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
-        binding.rvWisata.apply {
-            addItemDecoration(dividerItemDecoration)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = storyAdapter
-        }
 
         mainViewModel.wisata.observe(viewLifecycleOwner) {
             storyAdapter.submitData(lifecycle, it)
+            binding.rvWisata.apply {
+                addItemDecoration(dividerItemDecoration)
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = storyAdapter
+            }
         }
 
         binding.button.setOnClickListener {

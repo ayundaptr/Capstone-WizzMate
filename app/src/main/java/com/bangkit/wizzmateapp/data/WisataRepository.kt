@@ -13,7 +13,8 @@ class WisataRepository(private val apiService: ApiService) {
         return Pager(
             config = PagingConfig(
                 pageSize = 5,
-                enablePlaceholders = false
+                enablePlaceholders = false,
+                initialLoadSize = 5
             ),
             pagingSourceFactory = {
                 WisataPagingSource(apiService)

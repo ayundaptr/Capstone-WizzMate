@@ -23,14 +23,20 @@ class WisataPagingSource(private val apiService: ApiService) : PagingSource<Int,
             val response = apiService.getData(position, params.loadSize)
             val responseData = response.data
             Log.d("WisataPagingSource", "Loaded data: $responseData")
+
+            // Make sure that if there's no data, there's no next page.
+            val nextKey = if (responseData.isEmpty()) null else position + 1
+            val prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1
+
             LoadResult.Page(
                 data = responseData,
-                prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-                nextKey = if (responseData.isEmpty()) null else position + 1
+                prevKey = prevKey,
+                nextKey = nextKey
             )
         } catch (exception: Exception) {
             Log.e("WisataPagingSource", "Error loading data", exception)
             LoadResult.Error(exception)
         }
     }
+
 }
