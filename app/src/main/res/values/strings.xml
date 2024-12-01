@@ -29,4 +29,5 @@
     <string name="destination_description">Description</string>
     <string name="destination_category">category</string>
     <string name="destination_category_label">Category :</string>
+    <string name="your_journey">Your Journey</string>
 </resources>
