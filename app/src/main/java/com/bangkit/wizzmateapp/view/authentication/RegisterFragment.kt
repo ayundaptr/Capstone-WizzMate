@@ -75,6 +75,14 @@ class RegisterFragment : Fragment() {
                 startActivity(Intent(context, AuthenticationActivity::class.java))
             } else {
                 Toast.makeText(requireContext(), "Register gagal", Toast.LENGTH_SHORT).show()
+                binding.apply {
+                    loadingBar.visibility = View.GONE
+                    buttonRegister.isEnabled = true
+                    edRegisterName.isEnabled = true
+                    edRegisterEmail.isEnabled = true
+                    edRegisterPassword.isEnabled = true
+                    edRegisterKonfirmasiPassword.isEnabled = false
+                }
             }
         }
     }

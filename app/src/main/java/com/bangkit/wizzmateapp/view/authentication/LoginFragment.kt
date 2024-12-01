@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
         val pref = SessionPreferences.getInstance(requireContext().dataStore)
         val viewModel =
             ViewModelProvider(this, LoginViewModelFactory(pref))[LoginViewModel::class.java]
-
+        binding.edLoginPassword.enforceMinLength = false
         makeTextLink(binding.tvDontHaveAccount, "Sign Up", false, R.color.primaryColor) {
             val intent = Intent(context, AuthenticationActivity::class.java).apply {
                 putExtra("isRegister", true)
@@ -62,6 +62,7 @@ class LoginFragment : Fragment() {
                     buttonLogin.isEnabled = false
                     edLoginEmail.isEnabled = false
                     edLoginPassword.isEnabled = false
+                    cbRemember.isEnabled = false
                 }
             }
         }
@@ -76,8 +77,13 @@ class LoginFragment : Fragment() {
                 }
             } else {
                 Toast.makeText(requireContext(), "Login gagal", Toast.LENGTH_SHORT).show()
-                binding.loadingBar.visibility = View.GONE
-                binding.buttonLogin.isEnabled = true
+                binding.apply {
+                    loadingBar.visibility = View.GONE
+                    buttonLogin.isEnabled = true
+                    edLoginEmail.isEnabled = true
+                    edLoginPassword.isEnabled = true
+                    cbRemember.isEnabled = false
+                }
             }
         }
     }

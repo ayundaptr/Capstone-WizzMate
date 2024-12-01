@@ -11,6 +11,7 @@ class PasswordInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : TextInputEditText(context, attrs) {
     private lateinit var textInputLayout: TextInputLayout
+    var enforceMinLength = true
 
     init {
         addTextChangedListener(object: TextWatcher {
@@ -20,11 +21,12 @@ class PasswordInput @JvmOverloads constructor(
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0.toString().length < 8) {
+                if (enforceMinLength && p0.toString().length < 8) {
                     textInputLayout.error = "Password minimal harus 8 karakter"
                 } else if (p0.toString().isEmpty()) {
                     textInputLayout.error = "password tidak boleh kosong"
                 } else {
+                    textInputLayout.setErrorEnabled(false)
                     textInputLayout.error = null
                 }
 
