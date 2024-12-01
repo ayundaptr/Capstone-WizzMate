@@ -8,13 +8,13 @@ This API provides functionality for user registration and login using Firebase A
 
 ### Endpoint
 
-**POST** `http://localhost:2000/api/auth/register`
-**GET** `http://localhost:2000/data?page=1&size=2`
-**SEARCH** `http://localhost:2000/data?page=1&size=2`
-**SEARCH** `http://localhost:2000/data?keyword=kebun&sortrating`
-**SEARCH** `http://localhost:2000/data?Category=Taman Hiburan`
-**SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating`
-**GET** `GET http://localhost:2000/flights`
+**POST** `http://localhost:2000/api/auth/register` <br>
+**GET** `http://localhost:2000/data?page=1&size=2` <br>
+**SEARCH** `http://localhost:2000/data?page=1&size=2` <br>
+**SEARCH** `http://localhost:2000/data?keyword=kebun&sortrating` <br>
+**SEARCH** `http://localhost:2000/data?Category=Taman Hiburan` <br>
+**SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating` <br>
+**GET** `GET http://localhost:2000/flights` <br>
 
 ### Request Body
 
