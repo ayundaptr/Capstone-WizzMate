@@ -10,11 +10,11 @@ This API provides functionality for user registration and login using Firebase A
 
 **POST** `http://localhost:2000/api/auth/register`
 **GET** `http://localhost:2000/data?page=1&size=2`
+**GET** `http://localhost:2000/flights`
 **SEARCH** `http://localhost:2000/data?page=1&size=2`
-**SEARCH** `http://localhost:2000/data?keyword=kebun&sortrating`
+**SEARCH** `http://localhost:2000/data?keyword=kebun&sort=rating`
 **SEARCH** `http://localhost:2000/data?Category=Taman Hiburan`
 **SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating`
-**GET** `GET http://localhost:2000/flights`
 
 ### Request Body
 
