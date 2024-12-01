@@ -8,13 +8,13 @@ This API provides functionality for user registration and login using Firebase A
 
 ### Endpoint
 
-**POST** `http://localhost:2000/api/auth/register`
-**GET** `http://localhost:2000/data?page=1&size=2`
-**GET** `http://localhost:2000/flights`
-**SEARCH** `http://localhost:2000/data?page=1&size=2`
-**SEARCH** `http://localhost:2000/data?keyword=kebun&sort=rating`
-**SEARCH** `http://localhost:2000/data?Category=Taman Hiburan`
-**SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating`
+**POST** `http://localhost:2000/api/auth/register` <br>
+**GET** `http://localhost:2000/data?page=1&size=2` <br>
+**SEARCH** `http://localhost:2000/data?page=1&size=2` <br>
+**SEARCH** `http://localhost:2000/data?keyword=kebun&sortrating` <br>
+**SEARCH** `http://localhost:2000/data?Category=Taman Hiburan` <br>
+**SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating` <br>
+**GET** `GET http://localhost:2000/flights` <br>
 
 ### Request Body
 
@@ -69,3 +69,4 @@ Before you begin, ensure you have the following installed on your machine:
    ```bash
    git clone https://github.com/your-username/express-api.git
 ````
+# wizzmate-app-recomendation
