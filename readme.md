@@ -10,7 +10,9 @@ This API provides functionality for user registration and login using Firebase A
 
 **POST** `http://localhost:2000/api/auth/register`
 **GET** `http://localhost:2000/data?page=1&size=2`
+
 **GET** `http://localhost:2000/flights`
+
 **SEARCH** `http://localhost:2000/data?page=1&size=2`
 **SEARCH** `http://localhost:2000/data?keyword=kebun&sort=rating`
 **SEARCH** `http://localhost:2000/data?Category=Taman Hiburan`
@@ -42,7 +44,7 @@ The request body must be a JSON object with the following fields:
 
 
 Tambah Preference
-Endpoint: POST /api/preferences/add-preference
+Endpoint: POST /preferences/add-preference
 {
   "category": "Beach"
 }
@@ -53,7 +55,7 @@ hasil output
 }
 
 Ambil Semua Preferences
-Endpoint: GET /api/preferences/
+Endpoint: GET /preferences/
 {
   "category": "Travel"
 }
@@ -72,27 +74,28 @@ hasil output
 
 
 Tambah User Preference
-Endpoint: POST /api/preferences/add-user-preference
+Endpoint: POST /preferences/add-user-preference
 {
-  "user_id": "user1",
-  "preference_id": "pref1"
+  "userId": "user2",
+  "preferenceId": "1677891012345"
 }
 hasil output
 {
   "success": true,
-  "relationId": "pref1"
+  "message": "Preference 1677891012345 added for user user2"
 }
 
 
 Ambil User Preferences Berdasarkan User ID
-Endpoint: GET /api/preferences/user/userId
+Endpoint: GET /preferences/user/user2
 ---hasil output
 {
   "success": true,
   "userPreferences": {
-    "pref1": {
-      "preferenceId": "pref1"
-    }
+    "preferences": [
+      "1677891012345"
+    ],
+    "userId": "user2"
   }
 }
 
@@ -126,4 +129,3 @@ Before you begin, ensure you have the following installed on your machine:
    ```bash
    git clone https://github.com/your-username/express-api.git
 ````
-# wizzmate-app-recomendation
