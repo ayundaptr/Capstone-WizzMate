@@ -24,8 +24,9 @@ router.get("/", (req, res) => {
     const lowerCaseKeyword = keyword.toLowerCase();
     filteredData = filteredData.filter(
       (item) =>
-        item.Place_Name &&
-        item.Place_Name.toLowerCase().includes(lowerCaseKeyword)
+        (item.Place_Name &&
+          item.Place_Name.toLowerCase().includes(lowerCaseKeyword)) ||
+        (item.City && item.City.toLowerCase().includes(lowerCaseKeyword))
     );
   }
 

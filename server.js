@@ -3,6 +3,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const dataRoutes = require("./routes/dataRoutes");
 const flightRoutes = require("./routes/flightRoutes");
+const preferenceRoutes = require("./routes/preferenceRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 2000;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/data", dataRoutes);
 app.use("/flights", flightRoutes);
+app.use("/api/preferences", preferenceRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
