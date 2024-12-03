@@ -6,7 +6,6 @@ const {
 } = require("firebase/auth");
 const { ref, set, get, child } = require("firebase/database");
 
-// Register dengan email dan password
 exports.register = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -24,7 +23,6 @@ exports.register = async (req, res) => {
     );
     const userId = userCredential.user.uid;
 
-    // Simpan data pengguna ke database
     await set(ref(db, `users/${userId}`), { username, email });
 
     res.status(201).json({
@@ -46,7 +44,6 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login dengan email dan password
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -62,7 +59,6 @@ exports.login = async (req, res) => {
     );
     const userId = userCredential.user.uid;
 
-    // Ambil data pengguna dari database
     const userSnapshot = await get(child(ref(db), `users/${userId}`));
 
     if (!userSnapshot.exists()) {
