@@ -7,7 +7,7 @@ const loadData = () => {
 
 const filterAndPaginateData = (
   data,
-  { page, size, category, keyword, sort }
+  { page, size, category, keyword, sort, City }
 ) => {
   let filteredData = data;
 
@@ -22,10 +22,19 @@ const filterAndPaginateData = (
     const lowerCaseKeyword = keyword.toLowerCase();
     filteredData = filteredData.filter(
       (item) =>
-        item.Place_Name &&
-        item.Place_Name.toLowerCase().includes(lowerCaseKeyword)
+        (item.Place_Name &&
+          item.Place_Name.toLowerCase().includes(lowerCaseKeyword)) ||
+        (item.City && item.City.toLowerCase().includes(lowerCaseKeyword))
     );
   }
+
+  // if (location) {
+  //   const lowerCaseLocation = location.toLowerCase();
+  //   filteredData = filteredData.filter(
+  //     (item) =>
+  //       item.Location && item.Location.toLowerCase().includes(lowerCaseLocation)
+  //   );
+  // }
 
   if (sort === "rating") {
     filteredData.sort((a, b) => b.Rating - a.Rating);

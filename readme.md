@@ -15,6 +15,7 @@ This API provides functionality for user registration and login using Firebase A
 **SEARCH** `http://localhost:2000/data?keyword=kebun&sort=rating`
 **SEARCH** `http://localhost:2000/data?Category=Taman Hiburan`
 **SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating`
+**SEARCH** `http://localhost:2000/data?keyword=jakarta`
 
 ### Request Body
 
@@ -37,6 +38,62 @@ The request body must be a JSON object with the following fields:
         {"id": 2, "name": "Kota Tua", "value": 200},
         {"id": 3, "name": "Dunia Fantasi", "value": 300}
     ]
+}
+
+
+Tambah Preference
+Endpoint: POST /api/preferences/add-preference
+{
+  "category": "Beach"
+}
+hasil output
+{
+  "success": true,
+  "preferenceId": "1733068252440"
+}
+
+Ambil Semua Preferences
+Endpoint: GET /api/preferences/
+{
+  "category": "Travel"
+}
+hasil output
+{
+  "success": true,
+  "preferences": {
+    "1733067870667": {
+      "category": "Travel"
+    },
+    "1733068252440": {
+      "category": "Beach"
+    }
+  }
+}
+
+
+Tambah User Preference
+Endpoint: POST /api/preferences/add-user-preference
+{
+  "user_id": "user1",
+  "preference_id": "pref1"
+}
+hasil output
+{
+  "success": true,
+  "relationId": "pref1"
+}
+
+
+Ambil User Preferences Berdasarkan User ID
+Endpoint: GET /api/preferences/user/userId
+---hasil output
+{
+  "success": true,
+  "userPreferences": {
+    "pref1": {
+      "preferenceId": "pref1"
+    }
+  }
 }
 
 ## Features

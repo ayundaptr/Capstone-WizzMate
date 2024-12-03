@@ -1,10 +1,12 @@
-const { auth, db } = require("../firebase-config");
+const { auth, db, googleProvider } = require("../firebase-config");
 const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } = require("firebase/auth");
 const { ref, set, get, child } = require("firebase/database");
 
+// Register dengan email dan password
 exports.register = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -22,10 +24,11 @@ exports.register = async (req, res) => {
     );
     const userId = userCredential.user.uid;
 
+    // Simpan data pengguna ke database
     await set(ref(db, `users/${userId}`), { username, email });
 
     res.status(201).json({
-      message: "Register Berhasil",
+      message: "Register berhasil",
       user: { id: userId, username, email },
     });
   } catch (error) {
@@ -43,6 +46,7 @@ exports.register = async (req, res) => {
   }
 };
 
+// Login dengan email dan password
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -58,6 +62,7 @@ exports.login = async (req, res) => {
     );
     const userId = userCredential.user.uid;
 
+    // Ambil data pengguna dari database
     const userSnapshot = await get(child(ref(db), `users/${userId}`));
 
     if (!userSnapshot.exists()) {
@@ -84,6 +89,43 @@ exports.login = async (req, res) => {
 
     res.status(500).json({
       message: errorMessage,
+      error: error.message,
+    });
+  }
+};
+
+// Login dengan Google
+exports.googleLogin = async (req, res) => {
+  try {
+    // Login menggunakan Google
+    const userCredential = await signInWithPopup(auth, googleProvider);
+    const user = userCredential.user;
+
+    // Cek apakah pengguna sudah ada di database
+    const userSnapshot = await get(child(ref(db), `users/${user.uid}`));
+
+    if (!userSnapshot.exists()) {
+      // Jika belum ada, tambahkan ke database
+      await set(ref(db, `users/${user.uid}`), {
+        username: user.displayName || "Google User",
+        email: user.email,
+        photoURL: user.photoURL,
+      });
+    }
+
+    res.status(200).json({
+      message: "Login dengan Google berhasil",
+      user: {
+        id: user.uid,
+        username: user.displayName || "Google User",
+        email: user.email,
+        photoURL: user.photoURL,
+      },
+    });
+  } catch (error) {
+    console.error("Error during Google Login:", error);
+    res.status(500).json({
+      message: "Gagal login dengan Google",
       error: error.message,
     });
   }
