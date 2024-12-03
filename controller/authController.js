@@ -94,18 +94,14 @@ exports.login = async (req, res) => {
   }
 };
 
-// Login dengan Google
 exports.googleLogin = async (req, res) => {
   try {
-    // Login menggunakan Google
     const userCredential = await signInWithPopup(auth, googleProvider);
     const user = userCredential.user;
 
-    // Cek apakah pengguna sudah ada di database
     const userSnapshot = await get(child(ref(db), `users/${user.uid}`));
 
     if (!userSnapshot.exists()) {
-      // Jika belum ada, tambahkan ke database
       await set(ref(db, `users/${user.uid}`), {
         username: user.displayName || "Google User",
         email: user.email,
