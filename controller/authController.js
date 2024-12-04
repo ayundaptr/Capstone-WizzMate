@@ -1,8 +1,8 @@
-const { auth, db, googleProvider } = require("../firebase-config");
+const { auth, db, GoogleAuthProvider } = require("../firebase-config");
 const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithCredential,
 } = require("firebase/auth");
 const { ref, set, get, child } = require("firebase/database");
 
@@ -91,34 +91,50 @@ exports.login = async (req, res) => {
 };
 
 exports.googleLogin = async (req, res) => {
+  const { idToken } = req.body;
+
+  if (!idToken) {
+    return res
+      .status(400)
+      .json({ success: false, message: "ID Token is required" });
+  }
+
   try {
-    const userCredential = await signInWithPopup(auth, googleProvider);
+    const credential = GoogleAuthProvider.credential(idToken);
+    const userCredential = await signInWithCredential(auth, credential);
+
     const user = userCredential.user;
+    const { uid, email, displayName, photoURL } = user;
 
-    const userSnapshot = await get(child(ref(db), `users/${user.uid}`));
+    const userRef = ref(db, `users/${uid}`);
+    const snapshot = await get(child(ref(db), `users/${uid}`));
 
-    if (!userSnapshot.exists()) {
-      await set(ref(db, `users/${user.uid}`), {
-        username: user.displayName || "Google User",
-        email: user.email,
-        photoURL: user.photoURL,
+    if (!snapshot.exists()) {
+      await set(userRef, {
+        uid,
+        email,
+        displayName,
+        photoURL: photoURL || null,
+        createdAt: new Date().toISOString(),
       });
     }
 
     res.status(200).json({
-      message: "Login dengan Google berhasil",
+      success: true,
+      message: "Google login successful",
       user: {
-        id: user.uid,
-        username: user.displayName || "Google User",
-        email: user.email,
-        photoURL: user.photoURL,
+        uid,
+        email,
+        displayName,
+        photoURL,
       },
     });
-  } catch (error) {
-    console.error("Error during Google Login:", error);
+  } catch (err) {
+    console.error("Error during Google login:", err);
     res.status(500).json({
-      message: "Gagal login dengan Google",
-      error: error.message,
+      success: false,
+      message: "Google login failed",
+      error: err.message,
     });
   }
 };
