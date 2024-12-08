@@ -8,27 +8,30 @@ This API provides functionality for user registration and login using Firebase A
 
 ### Endpoint
 
-**POST** `http://localhost:2000/api/auth/register`
-**GET** `http://localhost:2000/data?page=1&size=2`
+**POST** `http://localhost:2000/api/auth/register` </br>
+**GET** `http://localhost:2000/data?page=1&size=2` </br>
 
-**GET** `http://localhost:2000/flights`
+**GET** `http://localhost:2000/flights` </br>
 
-**SEARCH** `http://localhost:2000/data?page=1&size=2`
-**SEARCH** `http://localhost:2000/data?keyword=kebun&sort=rating`
-**SEARCH** `http://localhost:2000/data?Category=Taman Hiburan`
-**SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating`
-**SEARCH** `http://localhost:2000/data?keyword=jakarta`
+**GET** `http://localhost:2000/data?keyword=kebun&sort=rating` </br>
+**GET** `http://localhost:2000/data?Category=Taman Hiburan` </br>
+**GET** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating` </br>
+**GET** `http://localhost:2000/data?keyword=jakarta` </br>
+
+**GET** `localhost:2000/data/Monumen Nasional` </br>
 
 ### Request Body
 
 The request body must be a JSON object with the following fields:
 
-````json
+`````json
 {
   "username": "Wizzmate",
   "email": "Wizzmate@example.com",
   "password": "password123"
 }
+````json
+
 
 {
     "page": 1,
@@ -42,7 +45,7 @@ The request body must be a JSON object with the following fields:
     ]
 }
 
-
+````json
 Tambah Preference
 Endpoint: POST /preferences/add-preference
 {
@@ -53,6 +56,7 @@ hasil output
   "success": true,
   "preferenceId": "1733068252440"
 }
+````json
 
 Ambil Semua Preferences
 Endpoint: GET /preferences/
@@ -128,4 +132,4 @@ Before you begin, ensure you have the following installed on your machine:
 1. Clone this repository:
    ```bash
    git clone https://github.com/your-username/express-api.git
-````
+`````

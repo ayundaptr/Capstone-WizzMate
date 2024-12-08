@@ -1,13 +1,27 @@
 const fs = require("fs");
+const path = require("path");
 
 const loadData = () => {
-  const rawData = fs.readFileSync("data.json");
-  return JSON.parse(rawData);
+  try {
+    const filePath = path.join(__dirname, "../data.json");
+    const rawData = fs.readFileSync(filePath, "utf-8");
+    return JSON.parse(rawData);
+  } catch (err) {
+    throw new Error("Error loading data: " + err.message);
+  }
+};
+
+const findDataByPlaceName = (data, placeName) => {
+  return data.find(
+    (item) =>
+      item.Place_Name &&
+      item.Place_Name.toLowerCase() === placeName.toLowerCase()
+  );
 };
 
 const filterAndPaginateData = (
   data,
-  { page, size, category, keyword, sort, City }
+  { page = 1, size = 10, category, keyword, sort }
 ) => {
   let filteredData = data;
 
@@ -28,19 +42,12 @@ const filterAndPaginateData = (
     );
   }
 
-  // if (location) {
-  //   const lowerCaseLocation = location.toLowerCase();
-  //   filteredData = filteredData.filter(
-  //     (item) =>
-  //       item.Location && item.Location.toLowerCase().includes(lowerCaseLocation)
-  //   );
-  // }
-
   if (sort === "rating") {
     filteredData.sort((a, b) => b.Rating - a.Rating);
   }
 
   const totalItems = filteredData.length;
+
   const start = (page - 1) * size;
   const end = start + size;
   const paginatedData = filteredData.slice(start, end);
@@ -48,4 +55,8 @@ const filterAndPaginateData = (
   return { totalItems, paginatedData };
 };
 
-module.exports = { loadData, filterAndPaginateData };
+module.exports = {
+  loadData,
+  filterAndPaginateData,
+  findDataByPlaceName,
+};
