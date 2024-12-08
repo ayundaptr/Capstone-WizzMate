@@ -8,25 +8,30 @@ This API provides functionality for user registration and login using Firebase A
 
 ### Endpoint
 
-**POST** `http://localhost:2000/api/auth/register`
-**GET** `http://localhost:2000/data?page=1&size=2`
-**GET** `http://localhost:2000/flights`
-**SEARCH** `http://localhost:2000/data?page=1&size=2`
-**SEARCH** `http://localhost:2000/data?keyword=kebun&sort=rating`
-**SEARCH** `http://localhost:2000/data?Category=Taman Hiburan`
-**SEARCH** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating`
-**SEARCH** `http://localhost:2000/data?keyword=jakarta`
+**POST** `http://localhost:2000/api/auth/register` </br>
+**GET** `http://localhost:2000/data?page=1&size=2` </br>
+
+**GET** `http://localhost:2000/flights` </br>
+
+**GET** `http://localhost:2000/data?keyword=kebun&sort=rating` </br>
+**GET** `http://localhost:2000/data?Category=Taman Hiburan` </br>
+**GET** `http://localhost:2000/data?category=Tempat Ibadah&sort=rating` </br>
+**GET** `http://localhost:2000/data?keyword=jakarta` </br>
+
+**GET** `localhost:2000/data/Monumen Nasional` </br>
 
 ### Request Body
 
 The request body must be a JSON object with the following fields:
 
-````json
+`````json
 {
   "username": "Wizzmate",
   "email": "Wizzmate@example.com",
   "password": "password123"
 }
+````json
+
 
 {
     "page": 1,
@@ -40,9 +45,9 @@ The request body must be a JSON object with the following fields:
     ]
 }
 
-
+````json
 Tambah Preference
-Endpoint: POST /api/preferences/add-preference
+Endpoint: POST /preferences/add-preference
 {
   "category": "Beach"
 }
@@ -51,9 +56,10 @@ hasil output
   "success": true,
   "preferenceId": "1733068252440"
 }
+````json
 
 Ambil Semua Preferences
-Endpoint: GET /api/preferences/
+Endpoint: GET /preferences/
 {
   "category": "Travel"
 }
@@ -72,27 +78,28 @@ hasil output
 
 
 Tambah User Preference
-Endpoint: POST /api/preferences/add-user-preference
+Endpoint: POST /preferences/add-user-preference
 {
-  "user_id": "user1",
-  "preference_id": "pref1"
+  "userId": "user2",
+  "preferenceId": "1677891012345"
 }
 hasil output
 {
   "success": true,
-  "relationId": "pref1"
+  "message": "Preference 1677891012345 added for user user2"
 }
 
 
 Ambil User Preferences Berdasarkan User ID
-Endpoint: GET /api/preferences/user/userId
+Endpoint: GET /preferences/user/user2
 ---hasil output
 {
   "success": true,
   "userPreferences": {
-    "pref1": {
-      "preferenceId": "pref1"
-    }
+    "preferences": [
+      "1677891012345"
+    ],
+    "userId": "user2"
   }
 }
 
@@ -125,5 +132,4 @@ Before you begin, ensure you have the following installed on your machine:
 1. Clone this repository:
    ```bash
    git clone https://github.com/your-username/express-api.git
-````
-# wizzmate-app-recomendation
+`````

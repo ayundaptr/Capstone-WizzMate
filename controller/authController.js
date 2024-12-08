@@ -1,8 +1,8 @@
-const { auth, db, googleProvider } = require("../firebase-config");
+const { auth, db, GoogleAuthProvider } = require("../firebase-config");
 const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithCredential,
 } = require("firebase/auth");
 const { ref, set, get, child } = require("firebase/database");
 
@@ -85,39 +85,6 @@ exports.login = async (req, res) => {
 
     res.status(500).json({
       message: errorMessage,
-      error: error.message,
-    });
-  }
-};
-
-exports.googleLogin = async (req, res) => {
-  try {
-    const userCredential = await signInWithPopup(auth, googleProvider);
-    const user = userCredential.user;
-
-    const userSnapshot = await get(child(ref(db), `users/${user.uid}`));
-
-    if (!userSnapshot.exists()) {
-      await set(ref(db, `users/${user.uid}`), {
-        username: user.displayName || "Google User",
-        email: user.email,
-        photoURL: user.photoURL,
-      });
-    }
-
-    res.status(200).json({
-      message: "Login dengan Google berhasil",
-      user: {
-        id: user.uid,
-        username: user.displayName || "Google User",
-        email: user.email,
-        photoURL: user.photoURL,
-      },
-    });
-  } catch (error) {
-    console.error("Error during Google Login:", error);
-    res.status(500).json({
-      message: "Gagal login dengan Google",
       error: error.message,
     });
   }

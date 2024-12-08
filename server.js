@@ -14,7 +14,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/data", dataRoutes);
 app.use("/flights", flightRoutes);
-app.use("/api/preferences", preferenceRoutes);
+app.use("/preferences", preferenceRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -1,7 +1,8 @@
-// firebase-config.js
 const { initializeApp } = require("firebase/app");
 const { getAuth } = require("firebase/auth");
 const { getDatabase, ref, set } = require("firebase/database");
+const fetch = require("node-fetch");
+global.fetch = fetch;
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtCZQiGkcYLBkwTATpwatEOCblp9Dna98",
